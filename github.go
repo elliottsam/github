@@ -13,7 +13,6 @@ import (
 )
 
 type githubRelease struct {
-	ID     int64 `json:"id"`
 	Assets []struct {
 		BrowserDownloadURL string `json:"browser_download_url"`
 		Name               string `json:"name"`
@@ -51,7 +50,7 @@ func IsLatestRelease(owner, repo, version string) (err error) {
 		return
 	}
 	var v []string
-	v = append(v, version, strings.TrimPrefix(r.TagName, "v"))
+	v = append(v, strings.TrimPrefix(version, "v"), strings.TrimPrefix(r.TagName, "v"))
 	sort.Strings(v)
 
 	if v[len(v)-1] != version {
